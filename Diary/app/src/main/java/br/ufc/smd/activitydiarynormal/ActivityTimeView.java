@@ -70,28 +70,28 @@ public class ActivityTimeView extends ConstraintLayout {
         switch (activity)
         {
             case RUNNING:
-                imgActivity.setImageDrawable(Resources.getSystem().getDrawable(R.drawable.ic_still));
+                imgActivity.setImageResource(R.drawable.ic_running);
                 imgHeadphone.setVisibility(GONE);
                 break;
             case ON_BICYCLE:
-                imgActivity.setImageDrawable(Resources.getSystem().getDrawable(R.drawable.ic_still));
+                imgActivity.setImageResource(R.drawable.ic_running);
                 imgHeadphone.setVisibility(GONE);
                 break;
             case STILL_HEADPHONE:
-                imgActivity.setImageDrawable(Resources.getSystem().getDrawable(R.drawable.ic_still));
+                imgActivity.setImageResource(R.drawable.ic_still);
                 imgHeadphone.setVisibility(VISIBLE);
                 break;
             case RUNNING_HEADPHONE:
-                imgActivity.setImageDrawable(Resources.getSystem().getDrawable(R.drawable.ic_still));
+                imgActivity.setImageResource(R.drawable.ic_still);
                 imgHeadphone.setVisibility(VISIBLE);
                 break;
             case ON_BICYCLE_HEADPHONE:
-                imgActivity.setImageDrawable(Resources.getSystem().getDrawable(R.drawable.ic_still));
+                imgActivity.setImageResource(R.drawable.ic_running);
                 imgHeadphone.setVisibility(VISIBLE);
                 break;
             default:
             case STILL:
-                imgActivity.setImageDrawable(Resources.getSystem().getDrawable(R.drawable.ic_still));
+                imgActivity.setImageResource(R.drawable.ic_still);
                 imgHeadphone.setVisibility(GONE);
                 break;
         }
@@ -108,12 +108,12 @@ public class ActivityTimeView extends ConstraintLayout {
         txvTime.setText(s);
     }
 
-    public Map<String, String> calculateTime(long time) {
+    private Map<String, String> calculateTime(long time) {
         Map<String, String> calculated = new HashMap<>();
         long hours, minutes, seconds;
-        seconds = (int) (time / 1000) % 60 ;
-        minutes = (int) ((time / (1000*60)) % 60);
-        hours   = (int) ((time / (1000*60*60)) % 24);
+        seconds = Math.abs((time / 1000) % 60 );
+        minutes = Math.abs((time / (1000*60)) % 60);
+        hours   = Math.abs((time / (1000*60*60)) % 24);
         if(hours > 9)
             calculated.put("hours", "" + hours);
         else

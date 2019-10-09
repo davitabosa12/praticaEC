@@ -3,11 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="br.ufc.smd.activitydiarynormal.MainActivity">
     <item
-        android:id="@+id/action_read"
-        android:title="Read" />
-    <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_atualizar"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="Atualizar dados"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_iniciar"
+        android:title="Iniciar monitoramento" />
+    <item
+        android:id="@+id/action_reset"
+        android:orderInCategory="101"
+        android:title="Reiniciar dados" />
+    <item
+        android:id="@+id/action_desligar_fences"
+        android:title="Parar monitoramento" />
 </menu>
