@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">UFC Reminder</string>
+
+    <string-array name="locais_ufc">
+        <item>Campus do Pici</item>
+        <item>Campus Porangabussu</item>
+        <item>Campus Benfica</item>
+    </string-array>
+    <string-array name="horarios">
+        <item>Manhã</item>
+        <item>Tarde</item>
+        <item>Noite</item>
+    </string-array>
+</resources>
