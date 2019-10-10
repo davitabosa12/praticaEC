@@ -1,5 +1,6 @@
 package br.ufc.smd.ufcreminder;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -41,9 +42,14 @@ public class NovaMensagemActivity extends AppCompatActivity {
             horario = Mensagem.Horario.NOITE;
 
         Mensagem m = new Mensagem(mensagem, local, horario);
+        Intent intent = new Intent();
+        intent.putExtra("mensagem", m);
+        setResult(RESULT_OK, intent);
+        finish();
     }
 
     public void onCancelar(View view){
-
+        setResult(RESULT_CANCELED);
+        finish();
     }
 }

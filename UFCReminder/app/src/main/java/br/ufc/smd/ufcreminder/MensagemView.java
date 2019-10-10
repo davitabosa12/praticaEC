@@ -94,6 +94,7 @@ public class MensagemView extends ConstraintLayout {
         }
     }
 
+
     public interface OnDeletePressed{
         void onDeletePressed(Mensagem mensagem);
     }

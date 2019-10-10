@@ -1,5 +1,7 @@
 package br.ufc.smd.ufcreminder;
 
+import java.io.Serializable;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -9,7 +11,7 @@ import br.ufc.smd.ufcreminder.typeconverters.HorarioConverter;
 import br.ufc.smd.ufcreminder.typeconverters.LocalConverter;
 
 @Entity
-public class Mensagem {
+public class Mensagem implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
