@@ -23,7 +23,7 @@ public class HorarioConverter {
     }
 
     @TypeConverter
-    public static int toInteger(Mensagem.Horario horario){
+    public static int toHorarioInteger(Mensagem.Horario horario){
         return horario.getCode();
     }
 }

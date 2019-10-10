@@ -6,12 +6,12 @@ import br.ufc.smd.ufcreminder.Mensagem.Local;
 
 public class LocalConverter {
     @TypeConverter
-    public static Local toHorario(int horario){
-        if(horario == Local.PICI.getCode()){
+    public static Local toLocal(int local){
+        if(local == Local.PICI.getCode()){
             return Local.PICI;
-        } else if(horario == Mensagem.Horario.TARDE.getCode()){
+        } else if(local == Mensagem.Horario.TARDE.getCode()){
             return Local.PORANGABUSSU;
-        } else if(horario == Mensagem.Horario.NOITE.getCode()){
+        } else if(local == Mensagem.Horario.NOITE.getCode()){
             return Local.BENFICA;
         } else {
             throw new IllegalArgumentException("Os valores devem ser PICI, PORANGEBUSSU ou BENFICA");
@@ -19,7 +19,7 @@ public class LocalConverter {
     }
 
     @TypeConverter
-    public static int toInteger(Mensagem.Horario horario){
-        return horario.getCode();
+    public static int toLocalInteger(Mensagem.Local local){
+        return local.getCode();
     }
 }

@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverter;
 import androidx.room.TypeConverters;
 import br.ufc.smd.ufcreminder.typeconverters.HorarioConverter;
+import br.ufc.smd.ufcreminder.typeconverters.LocalConverter;
 
 @Entity
 public class Mensagem {
@@ -19,7 +20,6 @@ public class Mensagem {
     private Local local;
 
     @ColumnInfo(name = "horario")
-    @TypeConverters(HorarioConverter.class)
     private Horario horario;
 
     public int getId() {
