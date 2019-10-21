@@ -31,17 +31,20 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.List;
 
+import smd.ufc.br.easycontext.EasyContext;
+
 public class MainActivity extends AppCompatActivity implements MensagemView.OnDeletePressed {
 
     FloatingActionButton fabNovaMensagem;
     LinearLayout ll;
+    EasyContext easyContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        easyContext = EasyContext.init(this);
         fabNovaMensagem = findViewById(R.id.fab_nova_msg);
-
         ll = findViewById(R.id.ll_scroll);
         atualizarTela();
         ativarFences();
@@ -67,68 +70,11 @@ public class MainActivity extends AppCompatActivity implements MensagemView.OnDe
     }
 
     private void ativarFences() {
-        FenceClient client = Awareness.getFenceClient(this);
-        LocaisUFC locaisUFC = new LocaisUFC();
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 123);
-            }
-            return;
-        }
-        AwarenessFence pici = LocationFence.entering(locaisUFC.PICI.getLatitude(), locaisUFC.PICI.getLongitude(), 500);
-        AwarenessFence manha = TimeFence.inTimeInterval(TimeFence.TIME_INTERVAL_MORNING);
-        AwarenessFence tarde = TimeFence.inTimeInterval(TimeFence.TIME_INTERVAL_AFTERNOON);
-        AwarenessFence noite = TimeFence.inTimeInterval(TimeFence.TIME_INTERVAL_NIGHT);
-
-        AwarenessFence piciManha = AwarenessFence.and(pici, manha);
-        AwarenessFence piciTarde = AwarenessFence.and(pici, tarde);
-        AwarenessFence piciNoite = AwarenessFence.and(pici, noite);
-
-        PendingIntent piManha = PendingIntent.getBroadcast(this, 123, new Intent(this, PiciManhaReceiver.class), PendingIntent.FLAG_CANCEL_CURRENT);
-        PendingIntent piTarde = PendingIntent.getBroadcast(this, 456, new Intent(this, PiciTardeReceiver.class), PendingIntent.FLAG_CANCEL_CURRENT);
-        PendingIntent piNoite = PendingIntent.getBroadcast(this, 789, new Intent(this, PiciNoiteReceiver.class), PendingIntent.FLAG_CANCEL_CURRENT);
-
-        client.updateFences(new FenceUpdateRequest.Builder()
-                .addFence("manha", piciManha, piManha)
-                .addFence("tarde", piciTarde, piTarde)
-                .addFence("noite", piciNoite, piNoite)
-                .build()).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Toast.makeText(MainActivity.this, "Fences registered successfully", Toast.LENGTH_SHORT).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(MainActivity.this, "Error registering fences", Toast.LENGTH_SHORT).show();
-            }
-        });
+        easyContext.watchAll();
     }
 
     public void desativarFences(){
-        FenceClient client = Awareness.getFenceClient(this);
-        client.updateFences(new FenceUpdateRequest.Builder()
-        .removeFence("manha")
-        .removeFence("tarde")
-        .removeFence("noite")
-        .build()).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Toast.makeText(MainActivity.this, "Fences removed successfully", Toast.LENGTH_SHORT).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(MainActivity.this, "Error removing fences", Toast.LENGTH_SHORT).show();
-            }
-        });
+        easyContext.unwatchAll();
     }
 
     @Override

@@ -1,19 +1,18 @@
 package br.ufc.smd.ufcreminder;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
+import android.os.Bundle;
 
 import com.google.android.gms.awareness.fence.FenceState;
 
 import java.util.List;
 
-public class PiciNoiteReceiver extends BroadcastReceiver {
+import smd.ufc.br.easycontext.fence.FenceAction;
 
+public class NoiteReceiver implements FenceAction {
     @Override
-    public void onReceive(Context context, Intent intent) {
-        FenceState fenceState = FenceState.extract(intent);
-        if (fenceState.getCurrentState() == FenceState.TRUE) {
+    public void doOperation(Context context, FenceState state, Bundle data) {
+        if (state.getCurrentState() == FenceState.TRUE) {
             List<Mensagem> mensagemList =
                     AppDb.getInstance(context).mensagemDao().getLocalHorario(Mensagem.Local.PICI, Mensagem.Horario.NOITE);
 
