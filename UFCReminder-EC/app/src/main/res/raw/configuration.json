@@ -1,1 +1,89 @@
-{"version":"1.0","fences":[{"name":"manha","rule":{"ruleName":"Aggregate","method":"AGGREGATE.AND","rules":[{"ruleName":"Location","method":"LOCATION.ENTERING","latitude":-3.746561874382303,"longitude":-38.578126430511475,"radius":"1000"},{"ruleName":"TimeInterval","method":"TIME_INTERVAL.IN_TIME_INTERVAL","timeInterval":"TIME_INTERVAL.MORNING"}]},"action":[{"actionName":"CustomAction","className":"br.ufc.smd.ufcreminder.ManhaAction"}]},{"name":"tarde","rule":{"ruleName":"Aggregate","method":"AGGREGATE.AND","rules":[{"ruleName":"Location","method":"LOCATION.ENTERING","latitude":-3.746561874382303,"longitude":-38.578126430511475,"radius":"1000"},{"ruleName":"TimeInterval","method":"TIME_INTERVAL.IN_TIME_INTERVAL","timeInterval":"TIME_INTERVAL.AFTERNOON"}]},"action":[{"actionName":"CustomAction","className":"br.ufc.smd.ufcreminder.TardeAction"}]},{"name":"noite","rule":{"ruleName":"Aggregate","method":"AGGREGATE.AND","rules":[{"ruleName":"TimeInterval","method":"TIME_INTERVAL.IN_TIME_INTERVAL","timeInterval":"TIME_INTERVAL.NIGHT"},{"ruleName":"Location","method":"LOCATION.ENTERING","latitude":-3.746561874382303,"longitude":-38.578126430511475,"radius":"1000"}]},"action":[{"actionName":"CustomAction","className":"br.ufc.smd.ufcreminder.NoiteReceiver"}]}]}
+{
+  "version": "1.0",
+  "fences": [
+    {
+      "name": "manha",
+      "rule": {
+        "ruleName": "Aggregate",
+        "method": "AGGREGATE.AND",
+        "rules": [
+          {
+            "ruleName": "Location",
+            "method": "LOCATION.ENTERING",
+            "latitude": -3.7465618,
+            "longitude": -38.5781264,
+            "radius": 1000
+          },
+          {
+            "ruleName": "TimeInterval",
+            "method": "TIME_INTERVAL.IN_TIME_INTERVAL",
+            "timeInterval": "TIME_INTERVAL.MORNING"
+          }
+        ]
+      },
+      "action": [
+        {
+          "actionName": "CustomAction",
+          "className": "br.ufc.smd.ufcreminder.ManhaAction"
+        }
+      ]
+    },
+    {
+      "name": "tarde",
+      "rule": {
+        "ruleName": "Aggregate",
+        "method": "AGGREGATE.AND",
+        "rules": [
+          {
+            "ruleName": "Location",
+            "method": "LOCATION.ENTERING",
+            "latitude": -3.7465618,
+            "longitude": -38.5781264,
+            "radius": 1000
+          },
+          {
+            "ruleName": "TimeInterval",
+            "method": "TIME_INTERVAL.IN_TIME_INTERVAL",
+            "timeInterval": "TIME_INTERVAL.AFTERNOON"
+          }
+        ]
+      },
+      "action": [
+        {
+          "actionName": "NotificationAction",
+          "title": "HEATHER",
+          "channel": "SUPER GOOD",
+          "text": "IS GOOD",
+          "importance": "Notification.HIGH"
+        }
+      ]
+    },
+    {
+      "name": "noite",
+      "rule": {
+        "ruleName": "Aggregate",
+        "method": "AGGREGATE.AND",
+        "rules": [
+          {
+            "ruleName": "Location",
+            "method": "LOCATION.ENTERING",
+            "latitude": -3.7465618,
+            "longitude": -38.5781264,
+            "radius": 1000
+          },
+          {
+            "ruleName": "TimeInterval",
+            "method": "TIME_INTERVAL.IN_TIME_INTERVAL",
+            "timeInterval": "TIME_INTERVAL.EVENING"
+          }
+        ]
+      },
+      "action": [
+        {
+          "actionName": "CustomAction",
+          "className": "br.ufc.smd.ufcreminder.NoiteReceiver"
+        }
+      ]
+    }
+  ]
+}

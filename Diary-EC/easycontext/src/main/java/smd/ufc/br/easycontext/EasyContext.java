@@ -1,11 +1,11 @@
 package smd.ufc.br.easycontext;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -14,17 +14,19 @@ import java.util.Set;
 
 import smd.ufc.br.easycontext.fence.Fence;
 import smd.ufc.br.easycontext.fence.FenceManager;
+import smd.ufc.br.easycontext.fence.action.NotificationAction;
+import smd.ufc.br.easycontext.fence.action.VibrateAction;
 
 public class EasyContext {
     private static String TAG = "EasyContext";
     private static EasyContext instance;
     private FenceManager fenceManager;
     private Map<String, Fence> fenceList = new HashMap();
-    private EasyContext(Context context){
+    private EasyContext(Context context) {
         try {
             Configuration configuration;
             configuration = Configuration.readJSON(context);
-            for(Fence fence : configuration.getFenceList()){
+            for (Fence fence : configuration.getFenceList()) {
                 fenceList.put(fence.getName(), fence);
             }
             fenceManager = FenceManager.getInstance(context);
@@ -33,7 +35,6 @@ public class EasyContext {
             e.printStackTrace();
         }
     }
-
     public static EasyContext init(Context context){
         if (instance == null) {
             instance = new EasyContext(context);
@@ -44,7 +45,19 @@ public class EasyContext {
     public boolean watch(final String fenceName){
         Fence fence = fenceList.get(fenceName);
         if (fence != null) {
-            fenceManager.registerFence(fence, null).addOnFailureListener(new OnFailureListener() {
+            Bundle extra = new Bundle();
+            if(fence.getAction() instanceof NotificationAction){
+
+                NotificationAction notAction = (NotificationAction) fence.getAction();
+                extra.putString("title", notAction.getTitle());
+                extra.putString("text", notAction.getText());
+                extra.putString("channel", notAction.getChannel());
+                extra.putInt("importance", notAction.getImportance());
+            } else if(fence.getAction() instanceof VibrateAction){
+                VibrateAction vibeAction = (VibrateAction) fence.getAction();
+                extra.putLong("ms", vibeAction.getMillis());
+            }
+            fenceManager.registerFence(fence, extra).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     Log.e(TAG, "onFailure: could not register fence " + fenceName, e);

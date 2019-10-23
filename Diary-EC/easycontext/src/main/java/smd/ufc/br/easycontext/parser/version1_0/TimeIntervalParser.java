@@ -6,6 +6,7 @@ import com.google.android.gms.awareness.fence.TimeFence;
 import com.google.gson.stream.JsonReader;
 
 import java.io.IOException;
+import java.sql.Time;
 import java.util.TimeZone;
 
 import smd.ufc.br.easycontext.fence.TimeRule;
@@ -86,19 +87,19 @@ public class TimeIntervalParser {
             String strTimeInterval;
             jsonReader.nextName(); // property 'timeInterval'
             strTimeInterval = jsonReader.nextString();
-            if (strTimeInterval.equals("Morning")) {
+            if (strTimeInterval.equals(TimeRule.MORNING)) {
                 timeInterval = TimeFence.TIME_INTERVAL_MORNING;
-            } else if (strTimeInterval.equals("Afternoon")) {
+            } else if (strTimeInterval.equals(TimeRule.AFTERNOON)) {
                 timeInterval = TimeFence.TIME_INTERVAL_AFTERNOON;
-            } else if (strTimeInterval.equals("Evening")) {
+            } else if (strTimeInterval.equals(TimeRule.EVENING)) {
                 timeInterval = TimeFence.TIME_INTERVAL_EVENING;
-            } else if (strTimeInterval.equals("Night")) {
+            } else if (strTimeInterval.equals(TimeRule.NIGHT)) {
                 timeInterval = TimeFence.TIME_INTERVAL_NIGHT;
-            } else if (strTimeInterval.equals("Weekday")) {
+            } else if (strTimeInterval.equals(TimeRule.WEEKDAY)) {
                 timeInterval = TimeFence.TIME_INTERVAL_WEEKDAY;
-            } else if (strTimeInterval.equals("Weekend")) {
+            } else if (strTimeInterval.equals(TimeRule.WEEKEND)) {
                 timeInterval = TimeFence.TIME_INTERVAL_WEEKEND;
-            } else if (strTimeInterval.equals("Holiday")) {
+            } else if (strTimeInterval.equals(TimeRule.HOLIDAY)) {
                 timeInterval = TimeFence.TIME_INTERVAL_HOLIDAY;
             }
             return TimeRule.inTimeInterval(timeInterval);

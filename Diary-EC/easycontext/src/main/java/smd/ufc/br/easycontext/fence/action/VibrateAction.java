@@ -16,17 +16,25 @@ import smd.ufc.br.easycontext.fence.FenceAction;
  */
 
 public class VibrateAction implements FenceAction {
-    long millis = 500;
+    public long getMillis() {
+        return millis;
+    }
+
+    public void setMillis(long millis) {
+        this.millis = millis;
+    }
 
     public VibrateAction(long millis) {
         this.millis = millis;
     }
 
+    private long millis = 500;
     public VibrateAction() {
     }
 
     @Override
     public void doOperation(Context context, FenceState state, Bundle data) {
+        long milliseconds = data.getLong("ms");
 
         if(state.getCurrentState() == FenceState.TRUE){
             Vibrator vibrator = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
@@ -36,7 +44,7 @@ public class VibrateAction implements FenceAction {
                     vibrator.vibrate(effect);
                 } else {
 
-                    vibrator.vibrate(500);
+                    vibrator.vibrate(millis);
                 }
             }
         }

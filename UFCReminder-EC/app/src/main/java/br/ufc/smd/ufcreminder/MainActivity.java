@@ -32,6 +32,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import java.util.List;
 
 import smd.ufc.br.easycontext.EasyContext;
+import smd.ufc.br.easycontext.fence.Fence;
+import smd.ufc.br.easycontext.fence.TimeRule;
 
 public class MainActivity extends AppCompatActivity implements MensagemView.OnDeletePressed {
 
@@ -46,8 +48,19 @@ public class MainActivity extends AppCompatActivity implements MensagemView.OnDe
         easyContext = EasyContext.init(this);
         fabNovaMensagem = findViewById(R.id.fab_nova_msg);
         ll = findViewById(R.id.ll_scroll);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if(checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_DENIED){
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 101);
+            } else {
+                ativarFences();
+            }
+        } else {
+            ativarFences();
+
+        }
+
         atualizarTela();
-        ativarFences();
+
     }
 
     @Override
@@ -105,7 +118,12 @@ public class MainActivity extends AppCompatActivity implements MensagemView.OnDe
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        ativarFences();
+        if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            ativarFences();
+        } else {
+            Toast.makeText(this, "Por favor, ative a permissão de localização", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     private void atualizarTela() {
