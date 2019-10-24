@@ -31,10 +31,21 @@ import br.ufc.smd.activitydiarynormal.StopwatchService.*;
 
 public class MainActivity extends AppCompatActivity {
 
+    
+
+
+	void ativarFences() {
+        // Ative as fences aqui
+    }
+
+    void desativarFences() {
+        // Desative as fences aqui
+    }
+    
+    /***************************** NÃO EDITAR O CÓDIGO A PARTIR DESTE PONTO *****************************/
     ActivityTimeView atvStill, atvMoving;
     public static final String STILL_FENCE_KEY = "stillStarting";
     public static final String MOVING_FENCE_KEY = "movingStarting";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,23 +93,19 @@ public class MainActivity extends AppCompatActivity {
 
     private void pararMonitoramento() {
         desativarFences();
-    }
-
-    private void desativarFences() {
-        FenceClient client = Awareness.getFenceClient(this);
-
-        client.updateFences(new FenceUpdateRequest.Builder()
-        .removeFence(STILL_FENCE_KEY)
-        .removeFence(MOVING_FENCE_KEY)
-        .build());
-
         new Stopwatch(this).stopMonitoring();
     }
 
     private void iniciarMonitoramento() {
         ativarFences();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startForegroundService(new Intent(this, StopwatchService.class));
+        	if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+        		// TODO: Permissao de ForegroundService para Android Pie
+
+        	} else{
+        		startForegroundService(new Intent(this, StopwatchService.class));	
+        	}
+            
         } else {
             startService(new Intent(this, StopwatchService.class));
         }
@@ -110,8 +117,6 @@ public class MainActivity extends AppCompatActivity {
         //TODO: remove * 1000
         long timeMoving = db.getMovingTime() * 1000;
         long timeStill = db.getStillTime() * 1000;
-        Log.d("dds", "atualizarDados: moving:" + timeMoving);
-        Log.d("dds", "atualizarDados: still:" + timeStill);
         atvMoving.setTime(timeMoving);
         atvStill.setTime(timeStill);
         atvMoving.setActivity(ActivityTimeView.Activities.RUNNING);
@@ -120,32 +125,5 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    void ativarFences() {
-        FenceClient client = Awareness.getFenceClient(this);
-
-        AwarenessFence stillStarting = DetectedActivityFence.starting(DetectedActivityFence.STILL);
-        AwarenessFence movingStarting = DetectedActivityFence.starting(DetectedActivityFence.RUNNING, DetectedActivityFence.ON_FOOT, DetectedActivityFence.WALKING);
-
-        PendingIntent piStillStarting, piStillStopping, piMovingStarting, piMovingStopping;
-        piStillStarting = PendingIntent.getBroadcast(this, 123, new Intent(this, StartingStillReceiver.class), PendingIntent.FLAG_CANCEL_CURRENT);
-        piMovingStarting = PendingIntent.getBroadcast(this, 123, new Intent(this, StartingMovingReceiver.class), PendingIntent.FLAG_CANCEL_CURRENT);
-
-        client.updateFences(new FenceUpdateRequest.Builder()
-                .addFence(STILL_FENCE_KEY, stillStarting, piStillStarting)
-                .addFence(MOVING_FENCE_KEY, movingStarting, piMovingStarting)
-                .build())
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Toast.makeText(getApplicationContext(), "Fences registered successfully", Toast.LENGTH_SHORT).show();
-            }
-        })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getApplicationContext(), "error registering fences", Toast.LENGTH_SHORT).show();
-                        Log.e("MAIN", "onFailure: failed", e);
-                    }
-                });
-    }
+    
 }

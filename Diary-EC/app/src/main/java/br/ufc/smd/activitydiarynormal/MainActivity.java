@@ -34,10 +34,20 @@ public class MainActivity extends AppCompatActivity {
 
         atvStill = findViewById(R.id.tv_still);
         atvMoving = findViewById(R.id.tv_moving);
-        atvStill.setTime(15684);
-
-        ec = EasyContext.init(this);
         atualizarDados();
+
+        //inicie o EasyContext aqui.
+        ec = EasyContext.init(this);
+        
+    }
+
+    void ativarFences() {
+        // inicie as fences aqui.
+    }
+
+
+    void desativarFences() {
+        // desative as fences aqui.
     }
 
     @Override
@@ -72,11 +82,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void pararMonitoramento() {
         desativarFences();
-    }
-
-    private void desativarFences() {
-
-        ec.unwatchAll();
         new Stopwatch(this).stopMonitoring();
     }
 
@@ -95,8 +100,6 @@ public class MainActivity extends AppCompatActivity {
         //TODO: remove * 1000
         long timeMoving = db.getMovingTime() * 1000;
         long timeStill = db.getStillTime() * 1000;
-        Log.d("dds", "atualizarDados: moving:" + timeMoving);
-        Log.d("dds", "atualizarDados: still:" + timeStill);
         atvMoving.setTime(timeMoving);
         atvStill.setTime(timeStill);
         atvMoving.setActivity(ActivityTimeView.Activities.RUNNING);
@@ -105,7 +108,5 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    void ativarFences() {
-        ec.watchAll();
-    }
+    
 }
