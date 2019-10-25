@@ -41,11 +41,23 @@ public class MainActivity extends AppCompatActivity implements MensagemView.OnDe
     LinearLayout ll;
     EasyContext easyContext;
 
+
+    public void ativarFences() {
+        // Observar fences aqui
+    }
+
+    public void desativarFences(){
+        // Parar de observar fences aqui
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        easyContext = EasyContext.init(this);
+
+        // Iniciar o EasyContext aqui
+
+        // Não editar a partir daqui
+
         fabNovaMensagem = findViewById(R.id.fab_nova_msg);
         ll = findViewById(R.id.ll_scroll);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -58,6 +70,8 @@ public class MainActivity extends AppCompatActivity implements MensagemView.OnDe
             ativarFences();
 
         }
+
+        
 
         atualizarTela();
 
@@ -82,13 +96,7 @@ public class MainActivity extends AppCompatActivity implements MensagemView.OnDe
         return super.onOptionsItemSelected(item);
     }
 
-    private void ativarFences() {
-        easyContext.watchAll();
-    }
-
-    public void desativarFences(){
-        easyContext.unwatchAll();
-    }
+    
 
     @Override
     public void onDeletePressed(Mensagem mensagem) {
