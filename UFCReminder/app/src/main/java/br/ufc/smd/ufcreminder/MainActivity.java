@@ -31,6 +31,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.List;
 
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
+
 public class MainActivity extends AppCompatActivity implements MensagemView.OnDeletePressed {
 
     FloatingActionButton fabNovaMensagem;
@@ -38,10 +40,11 @@ public class MainActivity extends AppCompatActivity implements MensagemView.OnDe
 
 
     private void ativarFences() {
+        // crie e registre as fences aqui
         
     }
     public void desativarFences(){
-        
+        // desative as fences aqui
     }
 
     /***** Não editar abaixo **/
@@ -66,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements MensagemView.OnDe
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.action_ativa_fences:
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PERMISSION_GRANTED) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 123);
                 }

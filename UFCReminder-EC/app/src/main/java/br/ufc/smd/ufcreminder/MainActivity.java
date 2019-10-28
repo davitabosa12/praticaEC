@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.google.android.gms.awareness.Awareness;
 import com.google.android.gms.awareness.FenceClient;
 import com.google.android.gms.awareness.fence.AwarenessFence;
+import com.google.android.gms.awareness.fence.DetectedActivityFence;
 import com.google.android.gms.awareness.fence.FenceUpdateRequest;
 import com.google.android.gms.awareness.fence.LocationFence;
 import com.google.android.gms.awareness.fence.TimeFence;
@@ -44,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements MensagemView.OnDe
 
     public void ativarFences() {
         // Observar fences aqui
+        FenceClient client = Awareness.getFenceClient(this);
+        AwarenessFence fence = DetectedActivityFence.starting(DetectedActivityFence.WALKING);
     }
 
     public void desativarFences(){

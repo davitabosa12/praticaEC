@@ -27,10 +27,6 @@ public class PiciManhaReceiver extends BroadcastReceiver {
                     AppDb.getInstance(context).mensagemDao().delete(m);
                 }
             }
-        } else if(fenceState.getCurrentState() == FenceState.FALSE){
-            Log.d("Manha", "FALSE");
-        } else if(fenceState.getCurrentState() == FenceState.UNKNOWN){
-            Log.d("Manha", "BODE");
         }
     }
 

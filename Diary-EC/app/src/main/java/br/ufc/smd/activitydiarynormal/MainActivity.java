@@ -17,6 +17,13 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.google.android.gms.awareness.Awareness;
+import com.google.android.gms.awareness.FenceClient;
+import com.google.android.gms.awareness.fence.AwarenessFence;
+import com.google.android.gms.awareness.fence.FenceUpdateRequest;
+import com.google.android.gms.awareness.fence.HeadphoneFence;
+
 import smd.ufc.br.easycontext.EasyContext;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         atualizarDados();
 
         //inicie o EasyContext aqui.
-        ec = EasyContext.init(this);
+
         
     }
 
